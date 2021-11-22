@@ -1,26 +1,47 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="container column">
+
+    <AppForm />
+
+    <div class="card card-w70">
+      <component
+        v-if="currentComponent"
+        :is="currentComponent"
+      >
+      </component>
+      <h3 v-else>Добавьте первый блок, чтобы увидеть результат</h3>
+    </div>
+  </div>
+  <AppComments />
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import AppForm from './components/AppForm'
+import AppComments from './components/AppComments'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    AppForm,
+    AppComments
+  },
+  data() {
+    return {
+      currentComponent: null
+    }
   }
 }
 </script>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style>
+  .avatar {
+    display: flex;
+    justify-content: center;
+  }
+
+  .avatar img {
+    width: 150px;
+    height: auto;
+    border-radius: 50%;
+  }
 </style>
