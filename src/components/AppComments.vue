@@ -1,15 +1,21 @@
 <template>
   <div class="container">
     <p>
-      <button class="btn primary">Загрузить комментарии</button>
+      <button
+        v-if="!commentsItems.length"
+        class="btn primary"
+        @click="uploadComments"
+      >
+        Загрузить комментарии
+      </button>
     </p>
-    <div v-if="!isLoading" class="card">
+    <div v-if="commentsItems.length" class="card">
       <h2>Комментарии</h2>
       <ul class="list">
-        <AppCommentItem />
+        <AppCommentItem v-for="item in commentsItems" :key="item.id" :comment="item" />
       </ul>
     </div>
-    <div v-else class="loader"></div>
+    <div v-if="isLoading" class="loader"></div>
   </div>
 </template>
 
@@ -24,6 +30,23 @@ export default {
     return {
       isLoading: false,
       commentsItems: []
+    }
+  },
+  methods: {
+    async fetchComments() {
+      try {
+        this.isLoading = true
+        const response = await fetch('https://jsonplaceholder.typicode.com/comments?_limit=42')
+        const data = await response.json()
+        this.commentsItems = data
+        this.isLoading = false
+      } catch (e) {
+        this.isLoading = false
+        throw new Error(e.message)
+      }
+    },
+    uploadComments() {
+      this.fetchComments()
     }
   }
 }

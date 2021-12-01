@@ -1,10 +1,11 @@
 <template>
-  <h2>Опыт работы</h2>
+  <h2>{{ this.subtitle }}</h2>
 </template>
 
 <script>
 export default {
-  name: 'AppSubTitle'
+  name: 'AppSubTitle',
+  props: ['subtitle']
 }
 </script>
 
